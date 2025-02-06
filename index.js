@@ -2,7 +2,7 @@
  * @Author: yangzhixin
  * @Date: 2025-02-06 16:10:07
  * @LastEditors: yangzhixin
- * @LastEditTime: 2025-02-06 16:49:19
+ * @LastEditTime: 2025-02-06 17:32:58
  * @Description: file content
  * @FilePath: /goods/index.js
  */
@@ -62,6 +62,12 @@ app.get("/api/send", async function (req, res) {
   const info = await sendApi(openid)
   res.send(info)
 });
+app.get("/api/addMessage", async function (req, res) {
+  const  openid  = req?.query?.openid || req.headers["x-wx-openid"] // 通过get参数形式指定openid
+  // 在这里直接是触发性发送，也可以自己跟业务做绑定，改成事件性发送
+  const info = await addApi(openid, req?.query)
+  res.send(info)
+});
 async function sendApi(openid) {
   return new Promise((resolve, reject) => {
     request({
@@ -73,13 +79,43 @@ async function sendApi(openid) {
         miniprogram_state: "developer",
         data: {
           date2: {
-            value: new Date().toLocaleDateString(),
+            value: new Date().toLocaleString(),
           },
           name3: {
             value: "这是一个提醒",
           },
           thing5: {
             value: "有用户下单了，请及时处理",
+          },
+        },
+      }),
+    }, function (error, res) {
+      if (error) reject(error)
+      resolve(res.body)
+    });
+  });
+}
+async function addApi(openid, query) {
+  return new Promise((resolve, reject) => {
+    request({
+      url: "http://api.weixin.qq.com/cgi-bin/message/subscribe/send",
+      method: "POST",
+      body: JSON.stringify({
+        touser: query?.openid || openid,
+        template_id: "ed3vQHowcQ1VmWz0IT7z_9MID89KIC0-n3c3AsYLKxU",
+        miniprogram_state: "developer",
+        data: {
+          thing1: {
+            value: "菜谱新增了～",  
+          },
+          thing2: {
+            value: query?.foodName,
+          },
+          thing3: {
+            value: query?.foodTypeName,
+          },
+          thing4: {
+            value: new Date().toLocaleString(),
           },
         },
       }),
