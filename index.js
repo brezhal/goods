@@ -2,7 +2,7 @@
  * @Author: yangzhixin
  * @Date: 2025-02-06 16:10:07
  * @LastEditors: yangzhixin
- * @LastEditTime: 2025-02-06 16:43:57
+ * @LastEditTime: 2025-02-06 16:49:19
  * @Description: file content
  * @FilePath: /goods/index.js
  */
@@ -11,7 +11,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const { init: initDB, Counter } = require("./db");
-const { request } = require("https");
+const request = require("request");
 const logger = morgan("tiny");
 
 const app = express();
@@ -73,7 +73,7 @@ async function sendApi(openid) {
         miniprogram_state: "developer",
         data: {
           date2: {
-            value: '时间',
+            value: new Date().toLocaleDateString(),
           },
           name3: {
             value: "这是一个提醒",
