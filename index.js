@@ -2,7 +2,7 @@
  * @Author: yangzhixin
  * @Date: 2025-02-06 16:10:07
  * @LastEditors: yangzhixin
- * @LastEditTime: 2025-02-06 16:33:47
+ * @LastEditTime: 2025-02-06 16:38:32
  * @Description: file content
  * @FilePath: /demo/goods/index.js
  */
@@ -73,7 +73,7 @@ async function sendApi(openid) {
         miniprogram_state: "developer",
         data: {
           date2: {
-            value: new Date().toLocaleString(),
+            value: '时间',
           },
           name3: {
             value: "这是一个提醒",
