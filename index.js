@@ -1,8 +1,8 @@
 /*
  * @Author: yangzhixin
- * @Date: 2025-02-06 11:11:45
+ * @Date: 2025-02-06 16:10:07
  * @LastEditors: yangzhixin
- * @LastEditTime: 2025-02-06 16:10:18
+ * @LastEditTime: 2025-02-06 16:29:30
  * @Description: file content
  * @FilePath: /demo/goods/index.js
  */
@@ -11,7 +11,6 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const { init: initDB, Counter } = require("./db");
-const request = require("request");
 
 const logger = morgan("tiny");
 
@@ -25,41 +24,6 @@ app.use(logger);
 app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
-// 发新菜品消息
-app.get("/api/send", async function (req, res) {
-  const  openid  = req?.query?.openid || req.headers["x-wx-openid"] // 通过get参数形式指定openid
-  // 在这里直接是触发性发送，也可以自己跟业务做绑定，改成事件性发送
-  const info = await sendApi(openid)
-  res.send(info)
-});
-async function sendApi(openid) {
-  return new Promise((resolve, reject) => {
-    request({
-      url: "http://api.weixin.qq.com/cgi-bin/message/subscribe/send",
-      method: "POST",
-      body: JSON.stringify({
-        touser: openid,
-        template_id: "ed3vQHowcQ1VmWz0IT7z_9MID89KIC0-n3c3AsYLKxU",
-        miniprogram_state: "developer",
-        data: {
-          date2: {
-            value: new Date().toLocaleString(),
-          },
-          name3: {
-            value: "这是一个提醒",
-          },
-          thing5: {
-            value: "有用户下单了，请及时处理",
-          },
-        },
-      }),
-    }, function (error, res) {
-      if (error) reject(error)
-      resolve(res.body)
-    });
-  });
-}
-// 发下单消息
 
 // 更新计数
 app.post("/api/count", async (req, res) => {
