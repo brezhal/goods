@@ -2,16 +2,16 @@
  * @Author: yangzhixin
  * @Date: 2025-02-06 16:10:07
  * @LastEditors: yangzhixin
- * @LastEditTime: 2025-02-06 16:38:32
+ * @LastEditTime: 2025-02-06 16:43:57
  * @Description: file content
- * @FilePath: /demo/goods/index.js
+ * @FilePath: /goods/index.js
  */
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const { init: initDB, Counter } = require("./db");
-const request = require("request");
+const { request } = require("https");
 const logger = morgan("tiny");
 
 const app = express();

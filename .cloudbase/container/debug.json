@@ -1,0 +1,46 @@
+{
+  "containers": [
+    {
+      "name": "goods",
+      "containerId": "01e845cd8d7a53ca360e6019d966af17ff81f099c1e08dae4acadaf879a8fe32",
+      "domain": "",
+      "ip": "",
+      "mode": "compose"
+    }
+  ],
+  "config": {
+    "goods": {
+      "containerPort": 80,
+      "dockerfilePath": "Dockerfile",
+      "buildDir": "",
+      "minNum": 0,
+      "maxNum": 5,
+      "cpu": 1,
+      "mem": 2,
+      "policyType": "cpu",
+      "policyThreshold": 80,
+      "policyDetails": [
+        {
+          "PolicyType": "cpu",
+          "PolicyThreshold": 80
+        },
+        {
+          "PolicyType": "mem",
+          "PolicyThreshold": 80
+        }
+      ],
+      "envParams": {
+        "MYSQL_USERNAME": "",
+        "MYSQL_PASSWORD": "",
+        "MYSQL_ADDRESS": ""
+      },
+      "customLogs": "stdout",
+      "initialDelaySeconds": 2,
+      "dataBaseName": "nodejs_demo",
+      "executeSQLs": [
+        "CREATE DATABASE IF NOT EXISTS nodejs_demo;",
+        "USE nodejs_demo;"
+      ]
+    }
+  }
+}
